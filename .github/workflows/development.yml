@@ -110,6 +110,7 @@ jobs:
           export PATH=/opt/homebrew/bin:$PATH
           brew install make ldid
           export SLIMMED=1
+          export BOOTJDK=$JAVA_HOME/bin
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
