@@ -1361,4 +1361,100 @@ public class GLFW
     public static boolean glfwPlatformSupported(@NativeType("int") int platform) {
         return platform == 0x00060001 || platform == 0x00060002;
     }
+
+// ==================== MC 26.2 compatibility methods ====================
+
+    @Nullable
+    @NativeType("char const *")
+    public static String glfwGetMonitorName(@NativeType("GLFWmonitor *") long monitor) {
+        return "iPad Display";
+    }
+
+    @Nullable
+    @NativeType("char const *")
+    public static String glfwGetWindowTitle(@NativeType("GLFWwindow *") long window) {
+        return "Minecraft";
+    }
+
+    public static float glfwGetWindowOpacity(@NativeType("GLFWwindow *") long window) {
+        return 1.0f;
+    }
+
+    public static void glfwSetWindowOpacity(@NativeType("GLFWwindow *") long window, float opacity) {
+        // no-op on iOS
+    }
+
+    public static void glfwFocusWindow(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    public static void glfwHideWindow(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    public static void glfwIconifyWindow(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    public static void glfwMaximizeWindow(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    public static void glfwRestoreWindow(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    public static void glfwSetWindowAspectRatio(@NativeType("GLFWwindow *") long window, int numer, int denom) {
+        // no-op on iOS
+    }
+
+    public static void glfwSetGamma(@NativeType("GLFWmonitor *") long monitor, float gamma) {
+        // no-op on iOS
+    }
+
+    public static long glfwGetMonitorUserPointer(@NativeType("GLFWmonitor *") long monitor) {
+        return 0L;
+    }
+
+    public static void glfwSetMonitorUserPointer(@NativeType("GLFWmonitor *") long monitor, long pointer) {
+        // no-op on iOS
+    }
+
+    public static long glfwGetWindowUserPointer(@NativeType("GLFWwindow *") long window) {
+        return 0L;
+    }
+
+    public static void glfwSetWindowUserPointer(@NativeType("GLFWwindow *") long window, long pointer) {
+        // no-op on iOS
+    }
+
+    @NativeType("GLFWglproc")
+    public static long glfwGetProcAddress(@NativeType("char const *") CharSequence procname) {
+        return 0L;
+    }
+
+    public static void glfwInitAllocator(@Nullable Object allocator) {
+        // no-op on iOS
+    }
+
+    public static void glfwSetPreeditCursorRectangle(@NativeType("GLFWwindow *") long window, int x, int y, int w, int h) {
+        // no-op on iOS
+    }
+
+    public static void glfwGetPreeditCursorRectangle(@NativeType("GLFWwindow *") long window, int[] x, int[] y, int[] w, int[] h) {
+        if (x != null && x.length > 0) x[0] = 0;
+        if (y != null && y.length > 0) y[0] = 0;
+        if (w != null && w.length > 0) w[0] = 0;
+        if (h != null && h.length > 0) h[0] = 0;
+    }
+
+    public static void glfwResetPreeditText(@NativeType("GLFWwindow *") long window) {
+        // no-op on iOS
+    }
+
+    @Nullable
+    public static IntBuffer glfwGetPreeditCandidate(@NativeType("GLFWwindow *") long window, int index, @Nullable int[] textCount) {
+        return null;
+    }
+
 }
