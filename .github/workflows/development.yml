@@ -97,6 +97,10 @@ jobs:
             cp Natives/resources/Frameworks/libspirv-cross.dylib Natives/resources/Frameworks/liblwjgl_spvc.dylib
           fi
           
+          # Stazeni lwjgl-spvc java trid, ktere Amethyst defaultne nema
+          curl -sLO https://repo1.maven.org/maven2/org/lwjgl/lwjgl-spvc/3.3.3/lwjgl-spvc-3.3.3.jar
+          mv lwjgl-spvc-3.3.3.jar JavaApp/libs/lwjgl/ || true
+          
           rm -f jna-5.17.0.jar lwjgl-spvc-3.4.1-natives-macos-arm64.jar
 
       - name: Setup Java
@@ -109,15 +113,14 @@ jobs:
         run: |
           export PATH=/opt/homebrew/bin:$PATH
           brew install make ldid
-          export SLIMMED=1
           export BOOTJDK=$JAVA_HOME/bin
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
+            
           elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
             # Build tipa only for tvOS
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
+            
           else
             # Build ipa only for everything else
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
@@ -129,23 +132,8 @@ jobs:
           name: org.angelauramc.amethyst-${{ matrix.platform_name }}.ipa
           path: artifacts/org.angelauramc.amethyst-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload regular tipa
-        uses: actions/upload-artifact@main
-        with:
-          name: org.angelauramc.amethyst-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/org.angelauramc.amethyst-*-${{ matrix.platform_name }}-trollstore.tipa
 
-      - name: Upload slimmed ipa
-        uses: actions/upload-artifact@main
-        with:
-          name: org.angelauramc.amethyst.slimmed-${{ matrix.platform_name }}.ipa
-          path: artifacts/org.angelauramc.amethyst.slimmed-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload slimmed tipa
-        uses: actions/upload-artifact@main
-        with:
-          name: org.angelauramc.amethyst.slimmed-${{ matrix.platform_name }}-trollstore.tipa
-          path: artifacts/org.angelauramc.amethyst.slimmed-*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload PojavLauncher.dSYM
         uses: actions/upload-artifact@main

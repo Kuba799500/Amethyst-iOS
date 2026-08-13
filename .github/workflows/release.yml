@@ -131,10 +131,10 @@ jobs:
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
+            
           elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
             # Build tipa only for tvOS
-            gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }} TROLLSTORE_JIT_ENT=1
+            
           else
             # Build ipa only for everything else
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
@@ -146,11 +146,6 @@ jobs:
           name: net.kdt.pojavlauncher-${{ matrix.platform_name }}.ipa
           path: artifacts/net.kdt.pojavlauncher-*-${{ matrix.platform_name }}.ipa
 
-      - name: Upload regular tipa
-        uses: actions/upload-artifact@main
-        with:
-          name: net.kdt.pojavlauncher-${{ matrix.platform_name }}.tipa
-          path: artifacts/net.kdt.pojavlauncher-*-${{ matrix.platform_name }}-trollstore.tipa
 
       - name: Upload PojavLauncher.dSYM
         uses: actions/upload-artifact@main
