@@ -90,12 +90,11 @@ jobs:
             mv Natives/resources/Frameworks/libjnidispatch.jnilib Natives/resources/Frameworks/libjnidispatch.dylib
           fi
           
-          # Stazeni LWJGL 3.4.1 spvc a ziskani libspirv-cross.dylib
-          curl -sLO https://repo1.maven.org/maven2/org/lwjgl/lwjgl-spvc/3.4.1/lwjgl-spvc-3.4.1-natives-macos-arm64.jar
-          unzip -j lwjgl-spvc-3.4.1-natives-macos-arm64.jar macos/arm64/org/lwjgl/spvc/libspirv-cross.dylib -d Natives/resources/Frameworks/ || true
-          if [ -f Natives/resources/Frameworks/libspirv-cross.dylib ]; then
-            cp Natives/resources/Frameworks/libspirv-cross.dylib Natives/resources/Frameworks/liblwjgl_spvc.dylib
-          fi
+          # Vytvoreni falesne iOS knihovny pro spvc aby hra nespadla pri nacitani
+          echo "void dummy() {}" > dummy.c
+          clang -dynamiclib -arch arm64 -isysroot $(xcrun --sdk iphoneos --show-sdk-path) -o libspirv-cross.dylib dummy.c
+          cp libspirv-cross.dylib Natives/resources/Frameworks/libspirv-cross.dylib
+          cp libspirv-cross.dylib Natives/resources/Frameworks/liblwjgl_spvc.dylib
           
           # Stazeni lwjgl-spvc java trid, ktere Amethyst defaultne nema
           curl -sLO https://repo1.maven.org/maven2/org/lwjgl/lwjgl-spvc/3.3.3/lwjgl-spvc-3.3.3.jar

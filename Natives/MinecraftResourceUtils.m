@@ -92,7 +92,7 @@
             library[@"name"] = @"net.java.dev.jna:jna:5.17.0";
             library[@"downloads"][@"artifact"][@"path"] = @"net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar";
             library[@"downloads"][@"artifact"][@"url"] = @"https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar";
-            library[@"downloads"][@"artifact"][@"sha1"] = @"c280dc0e241fc86f7881e7d976daeb4e9c0c8096";
+            library[@"downloads"][@"artifact"][@"sha1"] = @"33d12735bef894440780fce64f9758d420c7bae2";
         } else if ([library[@"name"] hasPrefix:@"org.ow2.asm:asm-all:"]) {
             // Early versions of the ASM library get repalced with 5.0.4 because Pojav's LWJGL is compiled for
             // Java 8, which is not supported by old ASM versions. Mod loaders like Forge, which depend on this
