@@ -141,12 +141,12 @@ extern bool isUseStackQueueCall;
 - (void)setAttributedMarkedText:(NSAttributedString *)markedText selectedRange:(NSRange)selectedRange {
     // Delete the marked range
     NSInteger markedLength = [self offsetFromPosition:self.markedTextRange.start toPosition:self.markedTextRange.end];
-    [self sendMultiBackspaces:markedLength];
+    // [self sendMultiBackspaces:markedLength];
 
     [super setAttributedMarkedText:markedText selectedRange:selectedRange];
 
     // Insert the new text
-    [self sendText:markedText.string];
+    // [self sendText:markedText.string];
 }
 
 - (void)setText:(NSString *)text {
