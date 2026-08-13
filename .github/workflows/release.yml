@@ -128,17 +128,6 @@ jobs:
         run: |
           export PATH=/opt/procursus/bin:/opt/homebrew/bin:$PATH
           export RUNNER=1
-          # Patch lwjgl-glfw.jar to include glfwPlatformSupported for Minecraft 1.21
-          curl -sLO https://repo1.maven.org/maven2/org/javassist/javassist/3.29.2-GA/javassist-3.29.2-GA.jar
-          echo 'import javassist.*; public class Patcher { public static void main(String[] args) throws Exception { ClassPool pool = ClassPool.getDefault(); pool.insertClassPath("JavaApp/libs/lwjgl/lwjgl-glfw.jar"); CtClass cc = pool.get("org.lwjgl.glfw.GLFW"); try { cc.getDeclaredMethod("glfwPlatformSupported"); System.out.println("Method already exists"); } catch (NotFoundException e) { CtMethod m = CtNewMethod.make("public static boolean glfwPlatformSupported(int p) { return p == 0x00060001 || p == 0x00060002; }", cc); cc.addMethod(m); cc.writeFile("patched"); System.out.println("Patched successfully"); } } }' > Patcher.java
-          $JAVA_HOME/bin/javac -cp javassist-3.29.2-GA.jar Patcher.java
-          $JAVA_HOME/bin/java -cp javassist-3.29.2-GA.jar:. Patcher
-          if [ -d "patched" ]; then
-            cd patched
-            $JAVA_HOME/bin/jar uf ../JavaApp/libs/lwjgl/lwjgl-glfw.jar org/lwjgl/glfw/GLFW.class
-            cd ..
-          fi
-          
           if [ "${{ matrix.platform_name }}" == "ios" ]; then
             # Build ipa and tipa for iOS
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
