@@ -1457,4 +1457,14 @@ public class GLFW
         return null;
     }
 
+    public static org.lwjgl.glfw.GLFWPreeditCallback glfwSetPreeditCallback(long window, @Nullable org.lwjgl.glfw.GLFWPreeditCallbackI cbfun) {
+        return null;
+    }
+    public static org.lwjgl.glfw.GLFWPreeditCandidateCallback glfwSetPreeditCandidateCallback(long window, @Nullable org.lwjgl.glfw.GLFWPreeditCandidateCallbackI cbfun) {
+        return null;
+    }
+    public static org.lwjgl.glfw.GLFWIMEStatusCallback glfwSetIMEStatusCallback(long window, @Nullable org.lwjgl.glfw.GLFWIMEStatusCallbackI cbfun) {
+        return null;
+    }
+
 }
