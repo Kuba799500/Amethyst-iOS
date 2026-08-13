@@ -33,9 +33,17 @@ extern bool isUseStackQueueCall;
 }
 
 - (void)sendText:(NSString *)text {
+    static unichar lastChar = 0;
+    static double lastTime = 0;
     for (int i = 0; i < text.length; i++) {
         // Directly convert unichar to jchar since both are in UTF-16 encoding.
         unichar theChar = [text characterAtIndex:i];
+        double currentTime = [[NSDate date] timeIntervalSince1970];
+        if (theChar == lastChar && (currentTime - lastTime) < 0.05) {
+            continue;
+        }
+        lastChar = theChar;
+        lastTime = currentTime;
         if (isUseStackQueueCall && self.sendCharMods != nil) {
             self.sendCharMods(theChar, 0);
         } else {
