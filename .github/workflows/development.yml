@@ -99,6 +99,12 @@ jobs:
           
           rm -f jna-5.17.0.jar lwjgl-spvc-3.4.1-natives-macos-arm64.jar
 
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+
       - name: Build for ${{ matrix.platform_name }}
         run: |
           export PATH=/opt/homebrew/bin:$PATH
