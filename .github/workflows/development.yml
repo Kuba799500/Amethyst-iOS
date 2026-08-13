@@ -79,6 +79,26 @@ jobs:
           git commit -am "CI: Update gl4es"
           git push
 
+      - name: Fetch missing natives for unjailbroken iOS
+        run: |
+          mkdir -p Natives/resources/Frameworks
+          
+          # Stazeni JNA 5.17.0 a ziskani libjnidispatch
+          curl -sLO https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar
+          unzip -j jna-5.17.0.jar com/sun/jna/darwin-aarch64/libjnidispatch.jnilib -d Natives/resources/Frameworks/ || true
+          if [ -f Natives/resources/Frameworks/libjnidispatch.jnilib ]; then
+            mv Natives/resources/Frameworks/libjnidispatch.jnilib Natives/resources/Frameworks/libjnidispatch.dylib
+          fi
+          
+          # Stazeni LWJGL 3.4.1 spvc a ziskani libspirv-cross.dylib
+          curl -sLO https://repo1.maven.org/maven2/org/lwjgl/lwjgl-spvc/3.4.1/lwjgl-spvc-3.4.1-natives-macos-arm64.jar
+          unzip -j lwjgl-spvc-3.4.1-natives-macos-arm64.jar macos/arm64/org/lwjgl/spvc/libspirv-cross.dylib -d Natives/resources/Frameworks/ || true
+          if [ -f Natives/resources/Frameworks/libspirv-cross.dylib ]; then
+            cp Natives/resources/Frameworks/libspirv-cross.dylib Natives/resources/Frameworks/liblwjgl_spvc.dylib
+          fi
+          
+          rm -f jna-5.17.0.jar lwjgl-spvc-3.4.1-natives-macos-arm64.jar
+
       - name: Build for ${{ matrix.platform_name }}
         run: |
           export PATH=/opt/homebrew/bin:$PATH
