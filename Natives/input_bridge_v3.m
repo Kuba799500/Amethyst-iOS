@@ -456,7 +456,7 @@ BOOL CallbackBridge_nativeSendCharMods(jchar codepoint, int mods) {
         }
         return YES;
     }
-    return NO;
+    return CallbackBridge_nativeSendChar(codepoint);
 }
 /*
 JNIEXPORT void JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeSendCursorEnter(JNIEnv* env, jclass clazz, jint entered) {
