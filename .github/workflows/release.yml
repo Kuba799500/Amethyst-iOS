@@ -134,6 +134,7 @@ jobs:
             
           elif [ "${{ matrix.platform_name }}" == "tvos" ]; then
             # Build tipa only for tvOS
+            :
             
           else
             # Build ipa only for everything else
