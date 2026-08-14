@@ -448,14 +448,6 @@ BOOL CallbackBridge_nativeSendChar(jchar codepoint /* jint codepoint */) {
 }
 
 BOOL CallbackBridge_nativeSendCharMods(jchar codepoint, int mods) {
-    if (GLFW_invoke_CharMods && isInputReady) {
-        if (isUseStackQueueCall) {
-            sendData(EVENT_TYPE_CHAR_MODS, (unsigned int) codepoint, mods, 0, 0);
-        } else {
-            GLFW_invoke_CharMods((void*) showingWindow, codepoint, mods);
-        }
-        return YES;
-    }
     return CallbackBridge_nativeSendChar(codepoint);
 }
 /*
